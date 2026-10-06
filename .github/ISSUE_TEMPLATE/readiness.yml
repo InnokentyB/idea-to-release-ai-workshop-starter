@@ -1,5 +1,5 @@
 name: Подтверждение готовности
-description: Отправьте ссылки и результаты проверки перед воркшопом
+description: Подтвердите локальную подготовку проекта перед воркшопом
 title: "[READY] "
 labels: ["workshop-ready"]
 body:
@@ -20,13 +20,6 @@ body:
       placeholder: https://github.com/username/repository
     validations:
       required: true
-  - type: input
-    id: application
-    attributes:
-      label: Публичная ссылка на приложение
-      placeholder: https://example.com
-    validations:
-      required: true
   - type: dropdown
     id: agent
     attributes:
@@ -40,13 +33,6 @@ body:
         - Другой
     validations:
       required: true
-  - type: input
-    id: platform
-    attributes:
-      label: Площадка публикации
-      placeholder: Vercel, Netlify, Cloudflare, Render, Railway, VPS или другая
-    validations:
-      required: true
   - type: checkboxes
     id: checks
     attributes:
@@ -56,12 +42,10 @@ body:
           required: true
         - label: "`tdpd audit` завершилась сообщением `Audit passed`"
           required: true
-        - label: "По публичной ссылке видно `WORKSHOP READY — <моё имя>`"
-          required: true
   - type: textarea
     id: evidence
     attributes:
       label: Результаты проверки
-      description: Вставьте строки READY FOR WORKSHOP и Audit passed. Перетащите сюда скриншот страницы с вашим именем.
+      description: Вставьте строки READY FOR WORKSHOP и Audit passed или приложите скриншот терминала.
     validations:
       required: true
