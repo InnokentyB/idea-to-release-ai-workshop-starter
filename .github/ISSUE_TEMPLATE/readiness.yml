@@ -59,7 +59,9 @@ body:
         - label: "По публичной ссылке видно `WORKSHOP READY — <моё имя>`"
           required: true
   - type: textarea
-    id: comment
+    id: evidence
     attributes:
-      label: Комментарий или ошибка
-      description: Оставьте пустым, если всё работает.
+      label: Результаты проверки
+      description: Вставьте строки READY FOR WORKSHOP и Audit passed. Перетащите сюда скриншот страницы с вашим именем.
+    validations:
+      required: true
