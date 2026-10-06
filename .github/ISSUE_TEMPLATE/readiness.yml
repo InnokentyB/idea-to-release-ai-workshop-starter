@@ -33,6 +33,16 @@ body:
         - Другой
     validations:
       required: true
+  - type: dropdown
+    id: operating_system
+    attributes:
+      label: Операционная система
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
   - type: checkboxes
     id: checks
     attributes:
