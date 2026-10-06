@@ -1,0 +1,65 @@
+name: Подтверждение готовности
+description: Отправьте ссылки и результаты проверки перед воркшопом
+title: "[READY] "
+labels: ["workshop-ready"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Не публикуйте пароли, токены, API keys, `.env` и приватные ключи.
+  - type: input
+    id: participant
+    attributes:
+      label: Имя
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Учебный репозиторий
+      placeholder: https://github.com/username/repository
+    validations:
+      required: true
+  - type: input
+    id: application
+    attributes:
+      label: Публичная ссылка на приложение
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: AI-агент
+      options:
+        - Codex
+        - Claude Code
+        - Cursor
+        - Windsurf
+        - GitHub Copilot
+        - Другой
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Площадка публикации
+      placeholder: Vercel, Netlify, Cloudflare, Render, Railway, VPS или другая
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Проверки
+      options:
+        - label: "`npm run workshop:check` завершилась сообщением `READY FOR WORKSHOP`"
+          required: true
+        - label: "`tdpd audit` завершилась сообщением `Audit passed`"
+          required: true
+        - label: "По публичной ссылке видно `WORKSHOP READY — <моё имя>`"
+          required: true
+  - type: textarea
+    id: comment
+    attributes:
+      label: Комментарий или ошибка
+      description: Оставьте пустым, если всё работает.

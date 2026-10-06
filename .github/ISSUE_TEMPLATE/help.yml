@@ -1,0 +1,46 @@
+name: Техническая помощь
+description: Сообщите о проблеме с подготовкой к воркшопу
+title: "[HELP] "
+labels: ["workshop-help"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Не публикуйте пароли, токены, API keys, `.env` и приватные ключи.
+  - type: dropdown
+    id: step
+    attributes:
+      label: На каком шаге возникла ошибка?
+      options:
+        - Установка инструментов
+        - Скачивание проекта
+        - Локальный запуск
+        - Установка TDPD
+        - Публикация приложения
+        - Другое
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Операционная система
+      placeholder: Windows 11, macOS или Linux
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: AI-агент
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Текст ошибки
+      description: Вставьте команду и полный текст ошибки без секретов.
+    validations:
+      required: true
+  - type: textarea
+    id: attempts
+    attributes:
+      label: Что уже попробовали?
