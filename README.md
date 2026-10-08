@@ -6,6 +6,7 @@
 
 ```bash
 npm ci
+npx playwright install chromium
 npm run workshop:check
 ```
 
@@ -21,6 +22,37 @@ READY FOR WORKSHOP
 npm run dev
 ```
 
+## Учебные сценарии
+
+- **S1:** создать событие с названием и будущей датой;
+- **S2:** добавить задачу и отметить её выполненной;
+- **S3:** увидеть понятные сообщения для пустых полей и даты в прошлом;
+- **S4:** сохранить событие и задачи после обновления страницы.
+
+Проверка сценариев:
+
+```bash
+npm run test:e2e
+```
+
+## Контрольные точки
+
+```bash
+npm run checkpoint -- list
+npm run checkpoint -- go red
+npm run checkpoint -- go slice-1
+npm run checkpoint -- go slice-2
+npm run checkpoint -- go green
+```
+
+Команда `go` сначала сохраняет незавершённые изменения в `git stash`, затем переключает контрольную ветку. Чтобы вернуть сохранённые изменения:
+
+```bash
+npm run checkpoint -- recover
+```
+
+Маршрут не использует `git reset --hard` и не удаляет файлы участника.
+
 ## Публикация
 
 Статический маршрут:
@@ -34,10 +66,6 @@ Web service или контейнерный маршрут:
 - start command: `npm run start`;
 - health check: `/health`;
 - port: переменная окружения `PORT`.
-
-## Проверка повторного выпуска
-
-Замените `WORKSHOP READY` в `src/App.tsx` на `WORKSHOP READY - <ваше имя>`, сделайте commit и push, затем проверьте обновление по публичной ссылке.
 
 ## Помощь
 
