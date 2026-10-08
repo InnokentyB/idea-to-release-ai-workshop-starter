@@ -37,3 +37,7 @@ input:focus { border-color: #315cf5; outline: 3px solid rgba(49, 92, 245, 0.15);
 button { min-height: 48px; padding: 12px 18px; border: 0; border-radius: 12px; color: #fff; background: #315cf5; font-weight: 700; cursor: pointer; }
 button:hover { background: #2348cc; }
 .counter { display: inline-block; margin: 22px 0 0; padding: 8px 12px; border-radius: 999px; color: #176b4d; background: #e8f8f1; font-weight: 700; }
+.task-list { display: grid; gap: 10px; margin: 24px 0 0; padding: 0; list-style: none; }
+.task-row { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #d9deeb; border-radius: 12px; }
+.task-row input { width: 20px; height: 20px; }
+.completed { color: #778198; text-decoration: line-through; }
