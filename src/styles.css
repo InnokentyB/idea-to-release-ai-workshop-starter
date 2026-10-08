@@ -41,3 +41,4 @@ button:hover { background: #2348cc; }
 .task-row { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #d9deeb; border-radius: 12px; }
 .task-row input { width: 20px; height: 20px; }
 .completed { color: #778198; text-decoration: line-through; }
+.error { margin: -8px 0 0; color: #b42318; font-size: 14px; font-weight: 650; }
