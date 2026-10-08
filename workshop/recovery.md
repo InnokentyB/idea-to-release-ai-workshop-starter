@@ -12,7 +12,7 @@
 6. Выполните:
 
 ```bash
-npm install
+npm ci
 npm run workshop:check
 ```
 
@@ -48,7 +48,7 @@ git switch --track origin/checkpoint/red
 Замените `checkpoint/red` на ветку, которую назвал ведущий. Затем выполните:
 
 ```bash
-npm install
+npm ci
 npm run workshop:check
 ```
 
@@ -62,4 +62,3 @@ git stash pop
 ```
 
 Если появились сообщения о конфликте, остановитесь и позовите ведущего. Не используйте `git reset --hard` и не удаляйте папку проекта.
-
