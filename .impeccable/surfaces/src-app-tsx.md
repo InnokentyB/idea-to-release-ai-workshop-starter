@@ -27,4 +27,6 @@ commercial claims, extra editable fields, dates, or fabricated history.
 Empty and no-result differ; every removed write control recovers keyboard focus.
 Responsive row reflow retains full contents and semantic table roles.
 
-Human UAT and external HTTPS deployment await final engineering checks/plan.
+Engineering complete: 36 production E2E and 4 server tests passed; independent
+finish reviewer ship. HTTPS release 7cca7b6 deployed/healthy, 36 live E2E passed.
+Human UAT remains pending.

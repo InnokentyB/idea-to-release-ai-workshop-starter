@@ -196,3 +196,9 @@ URL, директории, traversal, HEAD и запрет HTTP-записи б�
 Output не закрыт: требуется человеческая приёмка. Текущий живой c49c5d5 остаётся
 baseline до отдельной публикации новой версии; release-артефакт будет добавлен
 после проверки точного SHA, image digest и MCP operation.
+
+
+Релиз очереди опубликован на том же HTTPS origin: [release-7cca7b6.md](release-7cca7b6.md).
+Exact SHA/image/MCP operation сопоставлены, health и assets 200, **36 live E2E
+passed (21.7 s)**. PreviousReleaseId сохранён сервисом; rollback не запускался.
+Человеческий UAT всё ещё ожидается; record_uat не вызывался.
