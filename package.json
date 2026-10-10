@@ -11,6 +11,7 @@
     "build": "tsc -b && vite build",
     "start": "node server.mjs",
     "test:e2e": "playwright test",
+    "test:e2e:workshop": "playwright test --config playwright.workshop.config.ts",
     "test:e2e:ui": "playwright test --ui",
     "checkpoint": "node scripts/checkpoint.mjs",
     "workshop:check": "node scripts/workshop-check.mjs"

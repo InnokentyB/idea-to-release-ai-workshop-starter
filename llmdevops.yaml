@@ -1,0 +1,14 @@
+version: 1
+kind: stateless-http
+source:
+  repository: https://github.com/InnokentyB/idea-to-release-ai-workshop-starter
+  ref: main
+build:
+  dockerfile: Dockerfile
+http:
+  port: 8080
+  healthPath: /health
+env: []
+resources:
+  cpuMillicores: 250
+  memoryMb: 128

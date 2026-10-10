@@ -11,7 +11,7 @@ if (!existsSync(".git")) problems.push("This folder is not a Git repository");
 if (!existsSync(chromium.executablePath())) problems.push("Playwright Chromium is missing; run npx playwright install chromium");
 
 const appSource = readFileSync("src/App.tsx", "utf8");
-if (!appSource.includes("WORKSHOP READY") && !appSource.includes("Подготовьте событие")) {
+if (!appSource.includes("WORKSHOP READY") && !appSource.includes("Подготовьте событие") && !appSource.includes("Заявки на мероприятия")) {
   problems.push("src/App.tsx does not contain a known workshop screen");
 }
 

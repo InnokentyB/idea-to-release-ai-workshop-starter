@@ -1,0 +1,22 @@
+{
+  "name": "tdpd-product-framework",
+  "version": "0.3.0",
+  "description": "Create source-grounded products with AnalystCraft evidence workflows, TDPD, and a risk-scaled development council.",
+  "author": {
+    "name": "Innokenty Bodrov"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "TDPD Product Framework",
+    "shortDescription": "From sourced context to tested delivery and UAT.",
+    "longDescription": "Platform adapter for AnalystCraft source maps, context packs, findings and decision traceability plus Test-Driven Product Development, delivery gates, executable scenarios, and human acceptance.",
+    "developerName": "Innokenty Bodrov",
+    "category": "Productivity",
+    "capabilities": ["Product discovery", "Delivery planning", "Test-first implementation", "Product audit"],
+    "defaultPrompt": [
+      "Turn my product idea into a TDPD plan.",
+      "Deliver this feature through TDPD.",
+      "Audit this product against TDPD gates."
+    ]
+  }
+}

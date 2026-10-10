@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "mode": "manual",
+  "runtime": "manual-controller",
+  "status": "active",
+  "currentGate": "output",
+  "gates": {
+    "context": "passed",
+    "problem": "passed",
+    "input": "passed",
+    "red": "passed",
+    "green": "passed",
+    "output": "not_started"
+  },
+  "workUnits": [
+    {
+      "id": "WORK-ROLE-MODEL",
+      "owner": "model",
+      "status": "passed",
+      "surface": "src/eventApplications.ts",
+      "evidence": "docs/tdpd/event-applications/evidence.md"
+    },
+    {
+      "id": "WORK-ROLE-UI",
+      "owner": "interface",
+      "status": "passed",
+      "surface": "src/App.tsx, src/styles.css",
+      "evidence": "docs/tdpd/event-applications/evidence.md"
+    },
+    {
+      "id": "WORK-ROLE-TESTS",
+      "owner": "tests",
+      "status": "passed",
+      "surface": "tests/e2e/",
+      "evidence": "docs/tdpd/event-applications/evidence.md"
+    },
+    {
+      "id": "WORK-LIST-TESTS",
+      "owner": "tests",
+      "status": "passed",
+      "surface": "tests/e2e/event-application-list.spec.ts",
+      "evidence": "docs/tdpd/event-applications/evidence.md"
+    },
+    {
+      "id": "WORK-LIST-UI",
+      "owner": "interface",
+      "status": "passed",
+      "surface": "src/App.tsx, src/styles.css",
+      "evidence": "docs/tdpd/event-applications/evidence.md"
+    },
+    {
+      "id": "WORK-UX-TESTS",
+      "owner": "tests",
+      "status": "passed",
+      "surface": "tests/e2e/event-application-ux.spec.ts",
+      "evidence": "docs/tdpd/event-applications/ui-ux.md"
+    },
+    {
+      "id": "WORK-UX-UI",
+      "owner": "interface",
+      "status": "passed",
+      "surface": "src/App.tsx, src/styles.css, DESIGN.md",
+      "evidence": "docs/tdpd/event-applications/ui-ux.md"
+    }
+  ],
+  "blockers": [],
+  "createdAt": "2026-10-10T08:33:31.031Z",
+  "updatedAt": "2026-10-10T10:06:00.079386+00:00"
+}
