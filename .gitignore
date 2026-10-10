@@ -7,4 +7,6 @@ playwright-report/
 test-results/
 .workshop-backup.json
 .DS_Store
+.impeccable/questions/*.state.json
+.impeccable/questions/*.log
 tsconfig.*.tsbuildinfo

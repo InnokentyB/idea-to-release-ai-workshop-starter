@@ -22,18 +22,18 @@ DEP-DL003 (агент): ручной workflow GHCR публикует образ
 
 - `Dockerfile`: два этапа, закреплённый Node 24 Alpine, только build output и сервер в runtime, непривилегированный пользователь, `/health`.
 - `.dockerignore`: разрешены только необходимые исходники и build-конфигурация; credentials, `.git`, документация и localStorage не входят в образ.
-- `llmdevops.yaml`: stateless-http v1, текущий публичный репозиторий, main, 8080, `/health`, без application secrets.
+- `llmdevops.yaml`: stateless-http v1, текущий публичный репозиторий, `codex/event-applications-release`, 8080, `/health`, без application secrets.
 - `playwright.release.config.ts`: существующие продуктовые сценарии против `server.mjs` и собранного `dist`, без ослабления тестов.
 - `.github/workflows/vibehosting-image.yml`: ручной запуск, linux/amd64, GHCR, полный source SHA и image digest в итогах run.
 - Глобальный Codex MCP `vibehosting` подключён через официальный локальный мост. Для нового аккаунта задан отдельный credential-файл `~/.config/vibehosting/tech-analyst-club-account.json`. Код приглашения и токен в проект не записаны.
 
 ## Проверки и открытые блокеры
 
-Build обновлённого изолированного снимка прошёл. Production e2e: **29 passed, 1 failed**, 18.6 s. Сбой E2E-UX-05: на мобильном экране заголовок строки с длинным названием не находится по ожидаемой accessibility-роли/имени. Тесты не изменены. Это блокер выпуска до исправления UI и нового GREEN.
+Первый снимок: build прошёл, production e2e дали **29 passed, 1 failed** (E2E-UX-05). В UI-потоке уточнено доступное имя мобильного rowheader, сохранена проверка полного текста; добавлена проверка восстановления фокуса. Перед фиксацией release-ветки повторно выполнены `npm run build` и `npx playwright test --config playwright.release.config.ts --workers=2 --reporter=list`: **31 passed, 16.9 s**. Блокер тестов закрыт; человеческий UAT ожидается.
 
 Живой MCP initialize/tools/list прошёл; доступен `create_account`. Один вызов регистрации с локальным приглашением отклонён; новый аккаунт, project ID, deployment plan и operation ID не созданы. Требуется действующее приглашение либо снятие ограничения пилота оператором; остальные приглашения не перебирались.
 
-Docker daemon локально недоступен. Сам образ, container health и GHCR workflow пока не проверены запуском. Репозиторий публичный, но текущая рабочая копия не закоммичена и не отправлена. Workflow не запускался, GHCR digest отсутствует. Deployment и human UAT не выполнялись; этапы проекта не продвинуты.
+Docker daemon локально недоступен. Сам образ, container health и GHCR workflow пока не проверены запуском. Репозиторий публичный; основная реализация уже находится в `origin/main` как `b5668ba`. Пользователь запросил дальнейшую фиксацию и push в отдельную ветку `codex/event-applications-release`; она содержит эту реализацию и оставшиеся дизайн-артефакты. Workflow не запускался, GHCR digest отсутствует. Deployment и human UAT не выполнялись; этапы проекта не продвинуты.
 
 ## Порядок выпуска
 
