@@ -1,4 +1,4 @@
-import { createReadStream, existsSync } from "node:fs";
+import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,22 +19,53 @@ if (!existsSync(join(root, "index.html"))) {
 }
 
 createServer((request, response) => {
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    response.writeHead(405, { allow: "GET, HEAD", "content-type": "text/plain; charset=utf-8" });
+    response.end("Method not allowed");
+    return;
+  }
   if (request.url === "/health") {
     response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
     response.end(JSON.stringify({ status: "ok" }));
     return;
   }
 
-  const pathname = decodeURIComponent(new URL(request.url || "/", "http://localhost").pathname);
+  let pathname;
+  try {
+    pathname = decodeURIComponent(new URL(request.url || "/", "http://localhost").pathname);
+    if (pathname.includes("\0")) throw new Error("Invalid path");
+  } catch {
+    response.writeHead(400, { "content-type": "text/plain; charset=utf-8" });
+    response.end("Invalid request path");
+    return;
+  }
   const safePath = normalize(pathname).replace(/^(\.\.(\/|\\|$))+/, "");
   let filePath = join(root, safePath === "/" ? "index.html" : safePath);
-  if (!existsSync(filePath)) filePath = join(root, "index.html");
+  try {
+    if (!statSync(filePath).isFile()) filePath = join(root, "index.html");
+  } catch {
+    filePath = join(root, "index.html");
+  }
 
-  response.writeHead(200, {
+  const headers = {
     "content-type": contentTypes[extname(filePath)] || "application/octet-stream",
     "x-content-type-options": "nosniff",
+  };
+  if (request.method === "HEAD") {
+    response.writeHead(200, headers);
+    response.end();
+    return;
+  }
+  const stream = createReadStream(filePath);
+  stream.on("error", () => {
+    if (!response.headersSent) response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
+    response.end("File unavailable");
   });
-  createReadStream(filePath).pipe(response);
+  stream.once("open", () => {
+    response.writeHead(200, headers);
+    stream.pipe(response);
+  });
+  response.on("close", () => stream.destroy());
 }).listen(port, "0.0.0.0", () => {
   console.log(`Workshop starter listening on http://0.0.0.0:${port}`);
 });

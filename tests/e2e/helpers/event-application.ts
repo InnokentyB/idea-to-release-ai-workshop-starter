@@ -28,3 +28,11 @@ export async function submitApplication(page: Page, eventName = "Встреча 
   await page.getByRole("button", { name: "Согласующий", exact: true }).click();
   return { review, applicant, preparation };
 }
+
+// Exact action + exact title; escaping preserves literal hostile-input titles.
+export function applicationActionName(title: string): RegExp {
+  const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`^(?:Открыть|Исправить заявку|Продолжить подготовку|Рассмотреть заявку) ${escapedTitle}$`);
+}
+
+export const applicationActions = /^(?:Открыть|Исправить заявку|Продолжить подготовку|Рассмотреть заявку) /;

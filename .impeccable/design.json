@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T10:50:45.471528+00:00",
+  "title": "Design System: Заявки на мероприятия",
+  "extensions": {
+    "colorMeta": {
+      "forest": {
+        "role": "primary",
+        "displayName": "forest",
+        "tonalRamp": [
+          "oklch(15% 0.0659 149.22)",
+          "oklch(26% 0.0659 149.22)",
+          "oklch(37% 0.0659 149.22)",
+          "oklch(49% 0.0659 149.22)",
+          "oklch(60% 0.0659 149.22)",
+          "oklch(72% 0.0659 149.22)",
+          "oklch(84% 0.0659 149.22)",
+          "oklch(95% 0.0659 149.22)"
+        ]
+      },
+      "forest-hover": {
+        "role": "primary",
+        "displayName": "forest-hover",
+        "tonalRamp": [
+          "oklch(15% 0.0595 149.00)",
+          "oklch(26% 0.0595 149.00)",
+          "oklch(37% 0.0595 149.00)",
+          "oklch(49% 0.0595 149.00)",
+          "oklch(60% 0.0595 149.00)",
+          "oklch(72% 0.0595 149.00)",
+          "oklch(84% 0.0595 149.00)",
+          "oklch(95% 0.0595 149.00)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "graphite",
+        "tonalRamp": [
+          "oklch(15% 0.0123 135.05)",
+          "oklch(26% 0.0123 135.05)",
+          "oklch(37% 0.0123 135.05)",
+          "oklch(49% 0.0123 135.05)",
+          "oklch(60% 0.0123 135.05)",
+          "oklch(72% 0.0123 135.05)",
+          "oklch(84% 0.0123 135.05)",
+          "oklch(95% 0.0123 135.05)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "muted",
+        "tonalRamp": [
+          "oklch(15% 0.0153 130.93)",
+          "oklch(26% 0.0153 130.93)",
+          "oklch(37% 0.0153 130.93)",
+          "oklch(49% 0.0153 130.93)",
+          "oklch(60% 0.0153 130.93)",
+          "oklch(72% 0.0153 130.93)",
+          "oklch(84% 0.0153 130.93)",
+          "oklch(95% 0.0153 130.93)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "paper",
+        "tonalRamp": [
+          "oklch(15% 0.0054 95.10)",
+          "oklch(26% 0.0054 95.10)",
+          "oklch(37% 0.0054 95.10)",
+          "oklch(49% 0.0054 95.10)",
+          "oklch(60% 0.0054 95.10)",
+          "oklch(72% 0.0054 95.10)",
+          "oklch(84% 0.0054 95.10)",
+          "oklch(95% 0.0054 95.10)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "surface",
+        "tonalRamp": [
+          "oklch(15% 0.0039 106.47)",
+          "oklch(26% 0.0039 106.47)",
+          "oklch(37% 0.0039 106.47)",
+          "oklch(49% 0.0039 106.47)",
+          "oklch(60% 0.0039 106.47)",
+          "oklch(72% 0.0039 106.47)",
+          "oklch(84% 0.0039 106.47)",
+          "oklch(95% 0.0039 106.47)"
+        ]
+      },
+      "preparation": {
+        "role": "neutral",
+        "displayName": "preparation",
+        "tonalRamp": [
+          "oklch(15% 0.0080 114.22)",
+          "oklch(26% 0.0080 114.22)",
+          "oklch(37% 0.0080 114.22)",
+          "oklch(49% 0.0080 114.22)",
+          "oklch(60% 0.0080 114.22)",
+          "oklch(72% 0.0080 114.22)",
+          "oklch(84% 0.0080 114.22)",
+          "oklch(95% 0.0080 114.22)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "line",
+        "tonalRamp": [
+          "oklch(15% 0.0126 121.72)",
+          "oklch(26% 0.0126 121.72)",
+          "oklch(37% 0.0126 121.72)",
+          "oklch(49% 0.0126 121.72)",
+          "oklch(60% 0.0126 121.72)",
+          "oklch(72% 0.0126 121.72)",
+          "oklch(84% 0.0126 121.72)",
+          "oklch(95% 0.0126 121.72)"
+        ]
+      },
+      "control-hover": {
+        "role": "neutral",
+        "displayName": "control-hover",
+        "tonalRamp": [
+          "oklch(15% 0.0111 123.46)",
+          "oklch(26% 0.0111 123.46)",
+          "oklch(37% 0.0111 123.46)",
+          "oklch(49% 0.0111 123.46)",
+          "oklch(60% 0.0111 123.46)",
+          "oklch(72% 0.0111 123.46)",
+          "oklch(84% 0.0111 123.46)",
+          "oklch(95% 0.0111 123.46)"
+        ]
+      },
+      "role-selected": {
+        "role": "primary",
+        "displayName": "role-selected",
+        "tonalRamp": [
+          "oklch(15% 0.0181 134.92)",
+          "oklch(26% 0.0181 134.92)",
+          "oklch(37% 0.0181 134.92)",
+          "oklch(49% 0.0181 134.92)",
+          "oklch(60% 0.0181 134.92)",
+          "oklch(72% 0.0181 134.92)",
+          "oklch(84% 0.0181 134.92)",
+          "oklch(95% 0.0181 134.92)"
+        ]
+      },
+      "role-text": {
+        "role": "primary",
+        "displayName": "role-text",
+        "tonalRamp": [
+          "oklch(15% 0.0586 149.85)",
+          "oklch(26% 0.0586 149.85)",
+          "oklch(37% 0.0586 149.85)",
+          "oklch(49% 0.0586 149.85)",
+          "oklch(60% 0.0586 149.85)",
+          "oklch(72% 0.0586 149.85)",
+          "oklch(84% 0.0586 149.85)",
+          "oklch(95% 0.0586 149.85)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "field-border",
+        "tonalRamp": [
+          "oklch(15% 0.0233 132.59)",
+          "oklch(26% 0.0233 132.59)",
+          "oklch(37% 0.0233 132.59)",
+          "oklch(49% 0.0233 132.59)",
+          "oklch(60% 0.0233 132.59)",
+          "oklch(72% 0.0233 132.59)",
+          "oklch(84% 0.0233 132.59)",
+          "oklch(95% 0.0233 132.59)"
+        ]
+      },
+      "secondary-border": {
+        "role": "neutral",
+        "displayName": "secondary-border",
+        "tonalRamp": [
+          "oklch(15% 0.0240 134.99)",
+          "oklch(26% 0.0240 134.99)",
+          "oklch(37% 0.0240 134.99)",
+          "oklch(49% 0.0240 134.99)",
+          "oklch(60% 0.0240 134.99)",
+          "oklch(72% 0.0240 134.99)",
+          "oklch(84% 0.0240 134.99)",
+          "oklch(95% 0.0240 134.99)"
+        ]
+      },
+      "pending-text": {
+        "role": "neutral",
+        "displayName": "pending-text",
+        "tonalRamp": [
+          "oklch(15% 0.0211 132.12)",
+          "oklch(26% 0.0211 132.12)",
+          "oklch(37% 0.0211 132.12)",
+          "oklch(49% 0.0211 132.12)",
+          "oklch(60% 0.0211 132.12)",
+          "oklch(72% 0.0211 132.12)",
+          "oklch(84% 0.0211 132.12)",
+          "oklch(95% 0.0211 132.12)"
+        ]
+      },
+      "returned-text": {
+        "role": "secondary",
+        "displayName": "returned-text",
+        "tonalRamp": [
+          "oklch(15% 0.0926 72.86)",
+          "oklch(26% 0.0926 72.86)",
+          "oklch(37% 0.0926 72.86)",
+          "oklch(49% 0.0926 72.86)",
+          "oklch(60% 0.0926 72.86)",
+          "oklch(72% 0.0926 72.86)",
+          "oklch(84% 0.0926 72.86)",
+          "oklch(95% 0.0926 72.86)"
+        ]
+      },
+      "returned-bg": {
+        "role": "secondary",
+        "displayName": "returned-bg",
+        "tonalRamp": [
+          "oklch(15% 0.0331 83.71)",
+          "oklch(26% 0.0331 83.71)",
+          "oklch(37% 0.0331 83.71)",
+          "oklch(49% 0.0331 83.71)",
+          "oklch(60% 0.0331 83.71)",
+          "oklch(72% 0.0331 83.71)",
+          "oklch(84% 0.0331 83.71)",
+          "oklch(95% 0.0331 83.71)"
+        ]
+      },
+      "approved-text": {
+        "role": "primary",
+        "displayName": "approved-text",
+        "tonalRamp": [
+          "oklch(15% 0.0677 149.48)",
+          "oklch(26% 0.0677 149.48)",
+          "oklch(37% 0.0677 149.48)",
+          "oklch(49% 0.0677 149.48)",
+          "oklch(60% 0.0677 149.48)",
+          "oklch(72% 0.0677 149.48)",
+          "oklch(84% 0.0677 149.48)",
+          "oklch(95% 0.0677 149.48)"
+        ]
+      },
+      "approved-bg": {
+        "role": "primary",
+        "displayName": "approved-bg",
+        "tonalRamp": [
+          "oklch(15% 0.0226 134.95)",
+          "oklch(26% 0.0226 134.95)",
+          "oklch(37% 0.0226 134.95)",
+          "oklch(49% 0.0226 134.95)",
+          "oklch(60% 0.0226 134.95)",
+          "oklch(72% 0.0226 134.95)",
+          "oklch(84% 0.0226 134.95)",
+          "oklch(95% 0.0226 134.95)"
+        ]
+      },
+      "waiting-bg": {
+        "role": "neutral",
+        "displayName": "waiting-bg",
+        "tonalRamp": [
+          "oklch(15% 0.0080 114.22)",
+          "oklch(26% 0.0080 114.22)",
+          "oklch(37% 0.0080 114.22)",
+          "oklch(49% 0.0080 114.22)",
+          "oklch(60% 0.0080 114.22)",
+          "oklch(72% 0.0080 114.22)",
+          "oklch(84% 0.0080 114.22)",
+          "oklch(95% 0.0080 114.22)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "white",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(37% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(60% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "display",
+        "purpose": "Рабочий раздел"
+      },
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Название выбранной заявки"
+      },
+      "product-title": {
+        "displayName": "product-title",
+        "purpose": "Название продукта"
+      },
+      "section-title": {
+        "displayName": "section-title",
+        "purpose": "Раздел подготовки"
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Текст и поля"
+      },
+      "control": {
+        "displayName": "control",
+        "purpose": "Действия"
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Метки состояния"
+      },
+      "annotation": {
+        "displayName": "annotation",
+        "purpose": "Локальные ограничения"
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "progress",
+        "value": "transform 220ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Только изменение прогресса; prefers-reduced-motion: reduce отключает переход."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1200px"
+      },
+      {
+        "name": "row-reflow",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Основное действие",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Основное действие",
+      "html": "<button class=\"ds-control ds-primary\">Подать заявку</button>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-control { min-height: 44px; border-radius: 6px; padding: 11px 18px; font-size: .9375rem; font-weight: 600; line-height: 1.4; }\n.ds-primary { background: var(--forest); border: 1px solid var(--forest); color: #fff; }\n.ds-primary:hover { background: #325338; border-color: #325338; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Вторичное действие",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Вторичное действие",
+      "html": "<button class=\"ds-control ds-secondary\">Вернуть на доработку</button>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-control { min-height: 44px; border-radius: 6px; padding: 11px 18px; font-size: .9375rem; font-weight: 600; line-height: 1.4; }\n.ds-secondary { min-height: 44px; border-radius: 6px; padding: 11px 18px; font-size: .9375rem; font-weight: 600; line-height: 1.4; }\n.ds-secondary:hover { background: #edf0e8; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Текстовый переход",
+      "kind": "button",
+      "refersTo": null,
+      "description": "Текстовый переход",
+      "html": "<button class=\"ds-control ds-link\">Вернуться к списку</button>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-link { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: #365b3d; font-size: .9375rem; text-decoration: underline; text-underline-offset: 4px; }\n.ds-link:hover { color: #252923; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Поле названия",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Поле названия",
+      "html": "<label class=\"ds-label\" for=\"ds-title\">Название мероприятия</label><input id=\"ds-title\" class=\"ds-control ds-input\" type=\"text\" placeholder=\"Например, встреча отдела\">",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-label { display: block; font-size: .9375rem; font-weight: 600; margin-bottom: 8px; }\n.ds-input { display: block; width: 100%; padding: 12px 14px; min-height: 46px; border: 1px solid #aab3a4; border-radius: 6px; background: #fdfdfa; color: #252923; font-size: 1rem; }\n.ds-input::placeholder { color: var(--muted); opacity: 1; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Выбор роли",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Выбор роли",
+      "html": "<div class=\"ds-roles\" role=\"group\" aria-label=\"Роль в прототипе\"><button class=\"ds-control\" aria-pressed=\"true\">Организатор</button><button class=\"ds-control\" aria-pressed=\"false\">Согласующий</button></div>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-roles { display: flex; border: 1px solid #bec6b9; border-radius: 6px; overflow: hidden; flex-shrink: 0; }\n.ds-roles button { min-height: 40px; padding: 8px 16px; border: 0; background: transparent; color: #42483e; font-size: .875rem; font-weight: 500; }\n.ds-roles button + button { border-left: 1px solid #bec6b9; }\n.ds-roles button:hover { background: #edf0e8; }\n.ds-roles button[aria-pressed=\"true\"] { background: #e4ece0; color: #2f5036; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Фильтры состояния",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Фильтры состояния",
+      "html": "<div class=\"ds-filters\" role=\"group\" aria-label=\"Фильтр заявок\"><button class=\"ds-control\" aria-pressed=\"true\">Все</button><button class=\"ds-control\" aria-pressed=\"false\">На согласовании</button></div>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-filters { display: flex; gap: 24px; border-bottom: 1px solid var(--line); margin-bottom: 24px; overflow-x: auto; }\n.ds-filters button { position: relative; white-space: nowrap; min-height: 48px; padding: 10px 6px 14px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #50574b; font-size: 1rem; }\n.ds-filters button:hover { color: #252923; background: #f0f1ea; }\n.ds-filters button[aria-pressed=\"true\"] { border-bottom-color: var(--forest); color: #252923; font-weight: 600; }\n.ds-control:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }"
+    },
+    {
+      "name": "Возврат на доработку",
+      "kind": "chip",
+      "refersTo": "badge-returned",
+      "description": "Возврат на доработку",
+      "html": "<span class=\"ds-badge ds-returned\">На доработке</span>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-badge { display: inline-block; max-width: 100%; padding: 5px 10px; border-radius: 4px; font-size: .8125rem; font-weight: 600; line-height: 1.4; white-space: nowrap; }\n.ds-returned { color: #805719; background: #f5e9d2; }"
+    },
+    {
+      "name": "Рабочая карточка",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Рабочая карточка",
+      "html": "<section class=\"ds-card\"><div class=\"ds-summary\"><h2 class=\"ds-heading\">Семинар отдела</h2><p>Исправьте заявку по комментарию и отправьте повторно</p></div><div class=\"ds-preparation\">Подготовка доступна после согласования</div></section>",
+      "css": ".ds-control { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; cursor: pointer; }\n.ds-card { border: 1px solid var(--line); border-radius: 8px; background: #fdfdfa; overflow: hidden; }\n.ds-summary { padding: 20px 32px 32px; }\n.ds-preparation { padding: 28px 32px 32px; border-top: 1px solid var(--line); background: #f6f7f1; }\n.ds-heading { font-family: \"Golos Text\", ui-sans-serif, system-ui, sans-serif; font-size: 1.625rem; font-weight: 650; line-height: 1.3; margin: 0 0 20px; } .ds-card {font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; color: #252923;} .ds-card p {line-height: 1.5; margin: 0;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Очередь действий",
+    "overview": "Тёплая бумага, графитовый текст и лесной зелёный создают спокойную рабочую среду. Умеренная плотность, ясная типографическая иерархия и тонкие границы удерживают внимание на состоянии и доступном действии.\n\nСистема записана по реализованным src/App.tsx и src/styles.css и проверенным видам очереди и карточки на широком и узком экранах. Это code-led направление «Очередь действий», выбранное по делегированному решению; макет служил ориентиром для критики, а не утверждённой композицией. Локальный прототип хранит данные в localStorage текущего браузера; роли демонстрационные, без отдельного входа, общей базы и синхронизации.",
+    "keyCharacteristics": [
+      "Тёплые нейтральные поверхности и сдержанный лесной акцент.",
+      "Локальный Golos Text для заголовков с кириллицей, системный шрифт для чтения и управления.",
+      "Плоские поверхности, мягкие углы и полное содержание на мобильном экране."
+    ],
+    "rules": [
+      {
+        "name": "The Text With State Rule",
+        "body": "Цвет сопровождает текст состояния; решение и готовность имеют отдельные метки.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cyrillic Heading Rule",
+        "body": "Заголовки используют локальный Golos Text; системный стек остаётся для текста и управления.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Глубина передаётся тоном, границами и расстоянием, без теней.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do сохранять ясный текст действия и видимый клавиатурный фокус.",
+      "Do разделять состояние решения и вычисленную готовность текстовыми метками.",
+      "Do переносить длинные названия и сохранять весь комментарий, включая переводы строк.",
+      "Do явно обозначать локальное хранение, демонстрационные роли и временный список задач."
+    ],
+    "donts": [
+      "Don't обозначать состояние только цветом.",
+      "Don't заменять локальный Golos Text системным шрифтом в заголовках.",
+      "Don't скрывать содержание заявки при мобильной перестройке.",
+      "Don't добавлять декоративные тени или анимацию появления в эту плоскую рабочую систему."
+    ]
+  }
+}

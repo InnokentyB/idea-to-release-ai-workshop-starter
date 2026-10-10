@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { mandatoryTasks, submitApplication } from "./helpers/event-application";
+import { applicationActionName, applicationActions, mandatoryTasks, submitApplication } from "./helpers/event-application";
 
 const STORAGE_KEY = "event-applications-v1";
 
@@ -11,6 +11,7 @@ test("E2E-LOCAL-01: approval and partial preparation survive a reload", async ({
   await page.getByRole("button", { name: "Организатор", exact: true }).click();
   await preparation.getByRole("checkbox", { name: mandatoryTasks[0], exact: true }).check();
   await page.reload();
+  await page.getByRole("button", { name: applicationActionName("Семинар команды") }).click();
 
   await expect(applicant.getByText("Семинар команды", { exact: true })).toBeVisible();
   await expect(review.getByRole("status")).toHaveText("Согласовано");
@@ -35,13 +36,14 @@ test("E2E-LOCAL-02: multiple applications keep independent decisions and tasks a
   await second.review.getByRole("button", { name: "Вернуть на доработку", exact: true }).click();
   await page.reload();
 
-  await page.getByRole("button", { name: "Первое мероприятие", exact: true }).click();
+  await page.getByRole("button", { name: applicationActionName("Первое мероприятие") }).click();
   await expect(first.review.getByRole("status")).toHaveText("Согласовано");
   await expect(first.preparation.getByRole("checkbox", { name: mandatoryTasks[0], exact: true })).toBeChecked();
   await expect(first.preparation.getByText("Осталось обязательных задач: 3", { exact: true })).toBeVisible();
   await expect(first.applicant.getByText(comment, { exact: true })).toHaveCount(0);
 
-  await page.getByRole("button", { name: "Второе мероприятие", exact: true }).click();
+  await page.getByRole("button", { name: "Вернуться к списку", exact: true }).click();
+  await page.getByRole("button", { name: applicationActionName("Второе мероприятие") }).click();
   await expect(second.review.getByRole("status")).toHaveText("На доработке");
   await expect(second.applicant.getByText(comment, { exact: true })).toBeVisible();
   await expect(second.applicant.getByText("Исправьте заявку по комментарию и отправьте повторно", { exact: true })).toBeVisible();
@@ -60,12 +62,13 @@ test("E2E-LOCAL-03: denied storage writes show a failure and do not claim durabl
     };
   });
   await page.goto("/");
+  await page.getByRole("button", { name: "Новая заявка", exact: true }).click();
   await page.getByRole("textbox", { name: "Название мероприятия", exact: true }).fill("Несохранённая заявка");
   await page.getByRole("button", { name: "Подать заявку", exact: true }).click();
   await expect(page.getByRole("alert").filter({ hasText: /сохран|хранилищ|данн/i })).toBeVisible();
   await expect(page.getByText(/успешно сохранено|заявка сохранена/i)).toHaveCount(0);
   await page.reload();
-  await expect(page.getByRole("button", { name: "Несохранённая заявка", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: applicationActionName("Несохранённая заявка") })).toHaveCount(0);
 });
 
 for (const [description, payload] of [
@@ -92,6 +95,7 @@ test("E2E-LOCAL-05: application titles and return comments render as literal tex
   await expect(applicant.locator("img, script")).toHaveCount(0);
   expect(await page.evaluate(() => Reflect.get(window, "__injected"))).toBeUndefined();
   await page.reload();
+  await page.getByRole("button", { name: applicationActionName(title) }).click();
   await expect(applicant.getByText(title, { exact: true })).toBeVisible();
   await expect(applicant.getByText(comment, { exact: true })).toBeVisible();
   await expect(applicant.locator("img, script")).toHaveCount(0);

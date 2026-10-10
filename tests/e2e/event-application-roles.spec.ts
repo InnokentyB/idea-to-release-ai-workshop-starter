@@ -1,9 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
-import { mandatoryTasks } from "./helpers/event-application";
+import { applicationActionName, applicationActions, mandatoryTasks } from "./helpers/event-application";
 
 async function createAsOrganizer(page: Page, title = "Рабочая встреча") {
   await page.goto("/");
   await expect(page.getByRole("button", { name: "Организатор", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Новая заявка", exact: true }).click();
   await page.getByRole("textbox", { name: "Название мероприятия", exact: true }).fill(title);
   await page.getByRole("button", { name: "Подать заявку", exact: true }).click();
   return {
@@ -66,7 +67,9 @@ test("E2E-REV-01: correction resubmits the same application, retains history and
   await applicant.getByRole("button", { name: "Отправить повторно", exact: true }).click();
   await expect(applicant.getByRole("status")).toHaveText("На согласовании");
   await expect(applicant.getByText("Уточнённая рабочая встреча", { exact: true })).toBeVisible();
-  await expect(page.getByRole("navigation", { name: "Заявки", exact: true }).getByRole("button")).toHaveCount(1);
+  await page.getByRole("button", { name: "Все заявки", exact: true }).click();
+  await expect(page.getByRole("table", { name: "Список заявок", exact: true }).getByRole("button", { name: applicationActions })).toHaveCount(1);
+  await page.getByRole("button", { name: applicationActionName("Уточнённая рабочая встреча") }).click();
   const revisedIds = await page.evaluate(() => JSON.parse(localStorage.getItem("event-applications-v1")!).map((application: { id: string }) => application.id));
   expect(revisedIds).toEqual(initialIds);
   await expect(page.getByText(comment, { exact: true }).first()).toBeVisible();
@@ -78,6 +81,7 @@ test("E2E-REV-01: correction resubmits the same application, retains history and
   for (const title of mandatoryTasks) await expect(preparation.getByRole("checkbox", { name: title, exact: true })).toBeEnabled();
   await expect(page.getByText(comment, { exact: true }).first()).toBeVisible();
   await page.reload();
+  await page.getByRole("button", { name: applicationActionName("Уточнённая рабочая встреча") }).click();
   await expect(applicant.getByRole("status")).toHaveText("Согласовано");
   await expect(page.getByText(comment, { exact: true }).first()).toBeVisible();
 });
@@ -86,6 +90,7 @@ test("E2E-REV-02: returned application survives reload and blank correction cann
   const { applicant } = await returnForRevision(page);
   await page.reload();
   await expect(page.getByRole("button", { name: "Организатор", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: applicationActionName("Рабочая встреча") }).click();
   await expect(applicant.getByRole("status")).toHaveText("На доработке");
   await applicant.getByRole("textbox", { name: "Исправленное название мероприятия", exact: true }).fill("   ");
   await applicant.getByRole("button", { name: "Отправить повторно", exact: true }).click();
@@ -95,6 +100,7 @@ test("E2E-REV-02: returned application survives reload and blank correction cann
   await applicant.getByRole("button", { name: "Отправить повторно", exact: true }).click();
   await expect(applicant.getByRole("status")).toHaveText("На согласовании");
   await page.reload();
+  await page.getByRole("button", { name: applicationActionName("Исправленная встреча") }).click();
   await expect(applicant.getByRole("status")).toHaveText("На согласовании");
   await expect(applicant.getByText("Исправленная встреча", { exact: true })).toBeVisible();
 });
@@ -114,6 +120,7 @@ test("E2E-REV-03: second return still requires a comment and updates latest reas
   await expect(applicant.getByRole("status")).toHaveText("На доработке");
   await expect(applicant.getByText("Уточните программу", { exact: true })).toBeVisible();
   await page.reload();
+  await page.getByRole("button", { name: applicationActionName("Исправленная встреча") }).click();
   await expect(applicant.getByRole("status")).toHaveText("На доработке");
   await expect(applicant.getByText("Уточните программу", { exact: true })).toBeVisible();
 });

@@ -1,25 +1,27 @@
 import { expect, test, type Page } from "@playwright/test";
-import { mandatoryTasks, submitApplication } from "./helpers/event-application";
+import { applicationActionName, applicationActions, mandatoryTasks, submitApplication } from "./helpers/event-application";
 
 async function openOverview(page: Page) {
-  const action = page.getByRole("button", { name: "Все заявки", exact: true });
-  await expect(action, "Организатор может открыть полный список заявок").toBeVisible();
-  await action.click();
   const overview = page.getByRole("region", { name: "Все заявки", exact: true });
+  if (!(await overview.isVisible())) {
+    const action = page.getByRole("button", { name: "Все заявки", exact: true });
+    await expect(action, "Организатор может открыть полный список заявок").toBeVisible();
+    await action.click();
+  }
   await expect(overview).toBeVisible();
   return overview;
 }
 
 function rowFor(page: Page, title: string) {
   return page.getByRole("table", { name: "Список заявок", exact: true })
-    .getByRole("row").filter({ has: page.getByRole("button", { name: `Открыть заявку ${title}`, exact: true }) });
+    .getByRole("row").filter({ has: page.getByRole("button", { name: applicationActionName(title) }) });
 }
 
 test("E2E-LIST-01: empty overview explains that no applications exist", async ({ page }) => {
   await page.goto("/");
   const overview = await openOverview(page);
   await expect(overview.getByText("Заявок пока нет", { exact: true })).toBeVisible();
-  await expect(overview.getByRole("button", { name: /^Открыть заявку / })).toHaveCount(0);
+  await expect(overview.getByRole("button", { name: applicationActions })).toHaveCount(0);
 });
 
 test("E2E-LIST-02: all applications show decisions, remaining tasks and distinct readiness", async ({ page }) => {
@@ -60,7 +62,7 @@ test("E2E-LIST-03: organizer corrects a listed application and approver decides 
   await review.getByRole("button", { name: "Вернуть на доработку", exact: true }).click();
   await page.getByRole("button", { name: "Организатор", exact: true }).click();
   await openOverview(page);
-  await rowFor(page, "Исходное мероприятие").getByRole("button", { name: "Открыть заявку Исходное мероприятие", exact: true }).click();
+  await rowFor(page, "Исходное мероприятие").getByRole("button", { name: applicationActionName("Исходное мероприятие") }).click();
   await expect(page.getByRole("button", { name: "Организатор", exact: true })).toHaveAttribute("aria-pressed", "true");
   await applicant.getByRole("textbox", { name: "Исправленное название мероприятия", exact: true }).fill("Исправленное мероприятие");
   await applicant.getByRole("button", { name: "Отправить повторно", exact: true }).click();
@@ -69,10 +71,11 @@ test("E2E-LIST-03: organizer corrects a listed application and approver decides 
   await expect(rowFor(page, "Исправленное мероприятие").getByText("На согласовании", { exact: true })).toBeVisible();
   await expect(rowFor(page, "Исходное мероприятие")).toHaveCount(0);
   await page.getByRole("button", { name: "Согласующий", exact: true }).click();
-  await rowFor(page, "Исправленное мероприятие").getByRole("button", { name: "Открыть заявку Исправленное мероприятие", exact: true }).click();
+  await rowFor(page, "Исправленное мероприятие").getByRole("button", { name: applicationActionName("Исправленное мероприятие") }).click();
   await expect(page.getByRole("button", { name: "Согласующий", exact: true })).toHaveAttribute("aria-pressed", "true");
   await review.getByRole("button", { name: "Согласовать", exact: true }).click();
   await page.getByRole("button", { name: "Вернуться к списку", exact: true }).click();
+  await page.getByRole("group", { name: "Фильтр заявок", exact: true }).getByRole("button", { name: "Все", exact: true }).click();
   await expect(rowFor(page, "Исправленное мероприятие").getByText("Согласовано", { exact: true }).first()).toBeVisible();
   await expect(rowFor(page, "Исправленное мероприятие").getByText("Не готово", { exact: true })).toBeVisible();
 });

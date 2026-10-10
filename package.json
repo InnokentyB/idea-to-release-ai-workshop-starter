@@ -14,7 +14,8 @@
     "test:e2e:workshop": "playwright test --config playwright.workshop.config.ts",
     "test:e2e:ui": "playwright test --ui",
     "checkpoint": "node scripts/checkpoint.mjs",
-    "workshop:check": "node scripts/workshop-check.mjs"
+    "workshop:check": "node scripts/workshop-check.mjs",
+    "test:server": "node --test tests/server/server.test.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.2",

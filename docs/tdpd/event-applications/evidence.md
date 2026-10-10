@@ -181,3 +181,18 @@ review кода и широкого/узкого экрана пройден. П
 с пробелами: исправлено преобразование file URL через `fileURLToPath`.
 Audit TDPD и diff-check прошли; сигнатуры credentials в файлах коммита
 не обнаружены. Docker-образ и внешнее развёртывание этим запуском не проверялись.
+
+
+## S110 — очередь действий, 10.10.2026
+
+Четыре новые проверки до реализации: 4 failed, RED отсутствующих поведения
+реестра, поиска, фильтров и очереди согласующего. После реализации и финальных
+исправлений: production build + **36 E2E passed (12.8 s)**. Серверные тесты:
+первый RED 2 failed/1 passed, финальный GREEN **4 passed**; проверены malformed
+URL, директории, traversal, HEAD и запрет HTTP-записи без потери health.
+`npm audit --omit=dev`: 0 vulnerabilities; workshop:check: READY FOR WORKSHOP.
+Независимый Impeccable finish reviewer: **ship**, remaining clear.
+Скриншоты `.impeccable/review/`, дизайн-система DESIGN.md, правила redesign.md.
+Output не закрыт: требуется человеческая приёмка. Текущий живой c49c5d5 остаётся
+baseline до отдельной публикации новой версии; release-артефакт будет добавлен
+после проверки точного SHA, image digest и MCP operation.

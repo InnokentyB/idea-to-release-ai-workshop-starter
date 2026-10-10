@@ -17,6 +17,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: npm run test:server
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --config playwright.release.config.ts --workers=2 --reporter=list
       - uses: docker/setup-buildx-action@v3

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { submitApplication } from "./helpers/event-application";
+import { applicationActionName, applicationActions, submitApplication } from "./helpers/event-application";
 
 test("E2E-UX-01: selecting the current approver role preserves an unsent comment", async ({ page }) => {
   const { review } = await submitApplication(page, "Обсуждение программы");
@@ -22,7 +22,7 @@ test("E2E-UX-03: list and detail navigation move focus to the destination headin
   await submitApplication(page, "Встреча по навигации");
   await page.getByRole("button", { name: "Все заявки", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Все заявки", exact: true })).toBeFocused();
-  await page.getByRole("button", { name: "Открыть заявку Встреча по навигации", exact: true }).click();
+  await page.getByRole("button", { name: applicationActionName("Встреча по навигации") }).click();
   await expect(page.getByRole("heading", { name: "Встреча по навигации", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Вернуться к списку", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Все заявки", exact: true })).toBeFocused();
@@ -30,7 +30,7 @@ test("E2E-UX-03: list and detail navigation move focus to the destination headin
 
 test("E2E-UX-04: new application navigation focuses the title input", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Все заявки", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Все заявки", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Новая заявка", exact: true }).click();
   await expect(page.getByRole("textbox", { name: "Название мероприятия", exact: true })).toBeFocused();
 });
@@ -49,7 +49,7 @@ test("E2E-UX-05: mobile overview and detail retain long content without horizont
   await expect(titleCell).toHaveText(title);
   await expect(overview.getByText(reason, { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-  await overview.getByRole("button", { name: `Открыть заявку ${title}`, exact: true }).click();
+  await overview.getByRole("button", { name: applicationActionName(title) }).click();
   await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
   await expect(applicant.getByText(reason, { exact: true })).toBeVisible();
   await expect(applicant.getByRole("status")).toHaveText("На доработке");

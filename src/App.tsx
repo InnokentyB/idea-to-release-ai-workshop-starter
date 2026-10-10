@@ -19,6 +19,13 @@ const statusLabels: Record<Application['status'], string> = {
   approved: 'Согласовано',
 };
 
+type QueueFilter = 'all' | 'pending' | 'returned' | 'preparation' | 'ready';
+const queueFilters: { id: QueueFilter; label: string }[] = [
+  { id: 'all', label: 'Все' }, { id: 'pending', label: 'На согласовании' },
+  { id: 'returned', label: 'На доработке' }, { id: 'preparation', label: 'Подготовка' },
+  { id: 'ready', label: 'Готово' },
+];
+
 export default function App() {
   const [initial] = useState(loadApplications);
   const [applications, setApplications] = useState(initial.applications);
@@ -31,8 +38,11 @@ export default function App() {
   const [role, setRole] = useState<Role>('organizer');
   const [correctedTitle, setCorrectedTitle] = useState(initial.applications[0]?.title ?? '');
   const [correctionError, setCorrectionError] = useState<string | null>(null);
-  const [showOverview, setShowOverview] = useState(false);
-  const [showNewForm, setShowNewForm] = useState(initial.applications.length === 0);
+  const [showOverview, setShowOverview] = useState(true);
+  const [showNewForm, setShowNewForm] = useState(false);
+  const [formOrigin, setFormOrigin] = useState<'overview' | 'detail'>('overview');
+  const [queueFilter, setQueueFilter] = useState<QueueFilter>('all');
+  const [query, setQuery] = useState('');
   const [focusRequest, setFocusRequest] = useState<{ target: 'overview' | 'detail' | 'title' | 'comment' | 'correction' } | null>(null);
   const overviewHeading = useRef<HTMLHeadingElement>(null);
   const detailHeading = useRef<HTMLHeadingElement>(null);
@@ -40,6 +50,20 @@ export default function App() {
   const commentInput = useRef<HTMLTextAreaElement>(null);
   const correctionInput = useRef<HTMLInputElement>(null);
   const selected = applications.find((application) => application.id === selectedId);
+  const visibleApplications = applications.filter((application) => {
+    if (!application.title.toLocaleLowerCase('ru').includes(query.trim().toLocaleLowerCase('ru'))) return false;
+    if (queueFilter === 'pending' || queueFilter === 'returned') return application.status === queueFilter;
+    if (queueFilter === 'preparation') return application.status === 'approved' && !isReady(application);
+    if (queueFilter === 'ready') return isReady(application);
+    return true;
+  });
+
+  function rowAction(application: Application) {
+    if (role === 'approver' && application.status === 'pending') return 'Рассмотреть заявку';
+    if (role === 'organizer' && application.status === 'returned') return 'Исправить заявку';
+    if (role === 'organizer' && application.status === 'approved' && !isReady(application)) return 'Продолжить подготовку';
+    return 'Открыть';
+  }
 
   useLayoutEffect(() => {
     if (!focusRequest) return;
@@ -55,9 +79,17 @@ export default function App() {
   }
 
   function openNewApplication() {
+    setFormOrigin(showOverview ? 'overview' : 'detail');
     setShowOverview(false);
     setShowNewForm(true);
     setFocusRequest({ target: 'title' });
+  }
+
+  function cancelNewApplication() {
+    setShowNewForm(false);
+    setShowOverview(formOrigin === 'overview');
+    setTitleError(null);
+    setFocusRequest({ target: formOrigin === 'overview' ? 'overview' : 'detail' });
   }
 
   function persist(next: Application[]) {
@@ -128,6 +160,15 @@ export default function App() {
   function switchRole(nextRole: Role) {
     if (nextRole === role) return;
     setRole(nextRole);
+    if (showOverview || (showNewForm && formOrigin === 'overview')) {
+      setQueueFilter(nextRole === 'approver' ? 'pending' : 'all');
+      setQuery('');
+    }
+    if (showNewForm) {
+      setShowNewForm(false);
+      setShowOverview(formOrigin === 'overview');
+      setFocusRequest({ target: formOrigin === 'overview' ? 'overview' : 'detail' });
+    }
     setTitleError(null);
     setComment('');
     setDecisionError(null);
@@ -153,62 +194,44 @@ export default function App() {
   return (
     <main className="page-shell">
       <header className="page-header">
-        <div>
-          <h1>Заявки на мероприятия</h1>
-
-        </div>
-        <p className="prototype-note">Локальный прототип · данные в этом браузере</p>
-      </header>
-
-      <div className="role-toolbar">
+        <div className="product-identity"><h1>Заявки на мероприятия</h1><p className="prototype-note">Локальный прототип</p></div>
         <div className="role-switch" role="group" aria-label="Роль в прототипе">
           <button type="button" aria-pressed={role === 'organizer'} onClick={() => switchRole('organizer')}>Организатор</button>
           <button type="button" aria-pressed={role === 'approver'} onClick={() => switchRole('approver')}>Согласующий</button>
         </div>
-        <p className="role-note">Демо ролей, без отдельного входа</p>
-        {!showOverview && <button type="button" className="secondary overview-button" onClick={openOverview}>Все заявки</button>}
+      </header>
+      <div className="workspace-header">
+        {!showOverview && <button type="button" className="text-button" onClick={openOverview}>Все заявки</button>}
+        {showOverview && <h2 id="overview-heading" ref={overviewHeading} tabIndex={-1}>Все заявки</h2>}
+        {showNewForm && <h2>Новая заявка</h2>}
         {role === 'organizer' && !showNewForm && <button type="button" className="primary new-action" onClick={openNewApplication}>Новая заявка</button>}
       </div>
 
       {storageError && <p role="alert" className="error storage-error">{storageError}</p>}
 
       {showNewForm && role === 'organizer' && <form className="submission-form" onSubmit={submit}>
-        <div className="form-heading"><h2>Новая заявка</h2>{applications.length > 0 && <button type="button" className="text-button" onClick={() => { setShowNewForm(false); setFocusRequest({ target: 'detail' }); }}>Отмена</button>}</div>
+        <p className="form-instruction">Укажите мероприятие, которое нужно согласовать.</p>
         <label htmlFor="event-title">Название мероприятия</label>
         <div className="submit-row"><input ref={titleInput} id="event-title" type="text" value={title} required placeholder="Например, встреча отдела" aria-invalid={titleError ? true : undefined} aria-describedby={titleError ? 'title-error' : undefined} onChange={(event) => { setTitle(event.target.value); setTitleError(null); }} />
         <button className="primary" type="submit">Подать заявку</button></div>
+        <button type="button" className="text-button form-cancel" onClick={cancelNewApplication}>Отмена</button>
         {titleError && <p id="title-error" className="error" role="alert">{titleError}</p>}
       </form>}
 
-      <div className={`workspace${showOverview || applications.length === 0 ? ' overview-workspace' : ''}`}>
-        {!showOverview && applications.length > 0 && <aside className="sidebar" aria-label="Выбор заявки">
-          <nav className="application-list" aria-label="Заявки">
-            <div className="list-heading"><h2>Мероприятия</h2><span className="count">{applications.length}</span></div>
-            {applications.length === 0
-              ? <p className="list-empty">Здесь появятся поданные заявки.</p>
-              : <ul>{applications.map((application) => (
-                <li key={application.id}>
-                  <button className="application-choice" type="button" aria-label={application.title}
-                    aria-pressed={!showOverview && selectedId === application.id} onClick={() => selectApplication(application.id)}>
-                    <span className="choice-title">{application.title}</span>
-                    <span className="choice-state">{statusLabels[application.status]}{application.status === 'approved'
-                      ? ` · ${isReady(application) ? 'Готово' : `Задач осталось: ${remainingTasks(application)}`}` : ''}</span>
-                  </button>
-                </li>
-              ))}</ul>}
-          </nav>
-        </aside>}
-
+      <div className={`workspace${showOverview ? ' overview-workspace' : ' detail-workspace'}`}>
         {showOverview ? (
-          <section className="detail overview" aria-labelledby="overview-heading">
-            <div className="detail-heading overview-title">
-              <div><h2 id="overview-heading" ref={overviewHeading} tabIndex={-1}>Все заявки</h2>
-              <p>{applications.length === 0 ? 'Ни одной заявки' : `Заявок: ${applications.length}`}</p></div>
-
+          <section className="overview" aria-labelledby="overview-heading">
+            <div className="queue-filters" role="group" aria-label="Фильтр заявок">
+              {queueFilters.map((filter) => <button key={filter.id} type="button" aria-pressed={queueFilter === filter.id} onClick={() => setQueueFilter(filter.id)}>{filter.label}</button>)}
             </div>
-            {applications.length === 0 ? <div className="overview-empty"><h3>Заявок пока нет</h3><p>Подайте первую заявку в роли организатора — она появится здесь.</p></div> : (
+            <div className="queue-search">
+              <label className="sr-only" htmlFor="queue-search">Найти мероприятие</label>
+              <input id="queue-search" type="text" value={query} placeholder="Найти мероприятие" onChange={(event) => setQuery(event.target.value)} />
+              <p className="queue-count">{visibleApplications.length} из {applications.length} заявок</p>
+            </div>
+            {applications.length === 0 ? <div className="overview-empty"><h3>Заявок пока нет</h3><p>{role === 'organizer' ? 'Создайте первую заявку. Здесь будут её решение и подготовка.' : 'Организатор пока не подал ни одной заявки.'}</p></div> : visibleApplications.length === 0 ? <div className="overview-empty"><h3>Заявки не найдены</h3><p>Попробуйте другое название или покажите все состояния.</p><button type="button" className="secondary" onClick={() => { setQuery(''); setQueueFilter('all'); }}>Сбросить фильтры</button></div> : (
               <table className="applications-table" aria-label="Список заявок" role="table">
-                <thead role="rowgroup"><tr role="row">
+                <thead className="sr-only" role="rowgroup"><tr role="row">
                   <th scope="col" role="columnheader">Мероприятие</th>
                   <th scope="col" role="columnheader">Состояние заявки</th>
                   <th scope="col" role="columnheader">Решение</th>
@@ -216,32 +239,32 @@ export default function App() {
                   <th scope="col" role="columnheader">Готовность</th>
                   <th scope="col" role="columnheader">Действие</th>
                 </tr></thead>
-                <tbody role="rowgroup">{applications.map((application) => (
+                <tbody role="rowgroup">{visibleApplications.map((application) => (
                   <tr key={application.id} role="row">
                     <th scope="row" role="rowheader" data-label="Мероприятие">{application.title}</th>
-                    <td role="cell" data-label="Состояние заявки"><span className={`badge ${application.status}`}>{statusLabels[application.status]}</span></td>
-                    <td role="cell" data-label="Решение">
+                    <td className="queue-state" role="cell" data-label="Состояние заявки"><span className={`badge ${application.status}`}>{statusLabels[application.status]}</span></td>
+                    <td className="queue-decision" role="cell" data-label="Решение">
                       <p>{application.status === 'pending' ? 'Ожидает решения' : application.status === 'approved' ? 'Согласовано' : 'Возвращено на доработку'}</p>
                       {application.comment && <div className="list-comment">
                         <span>{application.status === 'returned' ? 'Комментарий' : 'Последний возврат'}</span>
                         <p>{application.comment}</p>
                       </div>}
                     </td>
-                    <td role="cell" data-label="Обязательные задачи">Осталось: {remainingTasks(application)} из {application.tasks.length}</td>
-                    <td role="cell" data-label="Готовность"><span className={`badge ${isReady(application) ? 'ready' : 'waiting'}`}>{isReady(application) ? 'Готово' : 'Не готово'}</span></td>
-                    <td role="cell" data-label="Действие"><button type="button" className="row-open" aria-label={`Открыть заявку ${application.title}`} onClick={() => selectApplication(application.id)}>Открыть</button></td>
+                    <td className="queue-tasks" role="cell" data-label="Обязательные задачи">Осталось: {remainingTasks(application)} из {application.tasks.length}</td>
+                    <td className="queue-readiness" role="cell" data-label="Готовность"><span className={`badge ${isReady(application) ? 'ready' : 'waiting'}`}>{isReady(application) ? 'Готово' : 'Не готово'}</span></td>
+                    <td className="queue-action" role="cell" data-label="Действие"><button type="button" className={`row-open${rowAction(application) !== 'Открыть' ? ' actionable' : ''}`} aria-label={`${rowAction(application)} ${application.title}`} onClick={() => selectApplication(application.id)}>{rowAction(application)}</button></td>
                   </tr>
                 ))}</tbody>
               </table>
             )}
           </section>
-        ) : !selected ? (showNewForm && role === 'organizer' ? null : (
+        ) : showNewForm ? null : !selected ? (
           <section className="detail empty-state" aria-labelledby="empty-title">
             <h2 id="empty-title">Заявок пока нет</h2>
             <p>{role === 'organizer' ? 'Укажите название мероприятия. После подачи согласующий примет решение, а вы увидите, что осталось для подготовки.' : 'Здесь появятся заявки организатора. Для демонстрации переключитесь на роль организатора и подайте заявку.'}</p>
 
           </section>
-        )) : (
+        ) : (
           <div className="detail">
             <div className="detail-navigation"><button type="button" className="back-to-list" onClick={openOverview}>Вернуться к списку</button></div>
             <section className="application-summary" aria-label="Состояние заявки">
@@ -306,11 +329,12 @@ export default function App() {
                   </label>
                 ))}
               </div>
-              <p className="temporary-note">Временный общий список задач. Заменим его после получения рабочего списка.</p>
+              <p className="temporary-note">Временный список обязательных задач.</p>
             </section>
           </div>
         )}
       </div>
+      <footer className="workspace-footer">Данные хранятся в этом браузере. Роли демонстрационные, отдельного входа нет.</footer>
     </main>
   );
 }
